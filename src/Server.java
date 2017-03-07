@@ -111,8 +111,10 @@ class ServerThread implements Runnable {
 	}
 
 	public void updateClientList() {
-
+		
+		allClients=null;
 		for (int i = 0; i < st.size(); i++) {
+			
 			allClients = allClients + " " + st.get(i);
 		}
 		System.out.println("All clients are: " + allClients);
