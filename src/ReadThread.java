@@ -1,4 +1,6 @@
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ReadThread implements Runnable {
 	private Thread thr;
@@ -15,12 +17,15 @@ public class ReadThread implements Runnable {
 
 	public void run() {
 		try {
+			ArrayList nameList;
 			String clientNameFirst=(String)ois.readObject();
+			 nameList = new ArrayList<String>(Arrays.asList(clientNameFirst.split(" ")));
 			if(clientNameFirst!=null){
 				System.out.println(clientNameFirst);
 			}
 			while (true) {
 				String clientName=(String)ois.readObject();
+				nameList = new ArrayList<String>(Arrays.asList(clientNameFirst.split(" ")));
 				if(clientName!=null){
 					System.out.println(clientName);
 				}
@@ -36,5 +41,6 @@ public class ReadThread implements Runnable {
 		}
 
 	}
+	
 }
 

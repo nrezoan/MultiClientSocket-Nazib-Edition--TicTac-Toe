@@ -97,8 +97,8 @@ public class ChatWindow extends JFrame implements ActionListener {
 //				}
 //				OnlineChatWindow.onlineList = new JList<ServerThread>(model);
 				
-				 OnlineChatWindow onlineChatWindow = new OnlineChatWindow();
-				 onlineChatWindow.setVisible(true);
+				 
+				 
 			}
 		});
 		
