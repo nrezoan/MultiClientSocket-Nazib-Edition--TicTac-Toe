@@ -36,19 +36,19 @@ public class ChatWindow extends JFrame implements ActionListener {
 	public ChatWindow(final ObjectOutputStream oos) {
 		super();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 590, 375);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		msgText = new JTextField();
-		msgText.setBounds(10, 215, 298, 35);
+		msgText.setBounds(10, 290, 298, 35);
 		contentPane.add(msgText);
 		msgText.setColumns(10);
 
 		msgSend = new JButton("SEND");
-		msgSend.setBounds(318, 215, 106, 35);
+		msgSend.setBounds(318, 290, 106, 35);
 		msgSend.addActionListener(this);
 		this.oos=oos;
 
@@ -56,11 +56,8 @@ public class ChatWindow extends JFrame implements ActionListener {
 		setTitle("Tic Tac Toe- " + UserRegistration.getUserName());
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 51, 414, 153);
+		scrollPane.setBounds(10, 51, 414, 228);
 		contentPane.add(scrollPane);
-		
-		msgArea = new JTextArea();
-		scrollPane.setViewportView(msgArea);
 		
 		btnLogout = new JButton("Logout");
 		btnLogout.addActionListener(new ActionListener() {
@@ -97,6 +94,10 @@ public class ChatWindow extends JFrame implements ActionListener {
 		
 		btnViewThreads.setBounds(10, 17, 89, 23);
 		contentPane.add(btnViewThreads);
+		
+		msgArea = new JTextArea();
+		msgArea.setBounds(10, 51, 412, 226);
+		contentPane.add(msgArea);
 		
 	}
 
