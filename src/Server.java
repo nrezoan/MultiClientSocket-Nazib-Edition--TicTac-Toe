@@ -72,43 +72,23 @@ class ServerThread implements Runnable {
 		// creating a user thread in server
 		// and sending the list to all clients
 
-		int userNumber = st.size();
 		while (true) {
-			int updatedUserNumber = st.size();
+
 			try {
 				String t = (String) ois.readObject();
-				if (t.equals("exit")) {
-					st.remove(this);
-					System.out.println("Object is removed");
-				}
-				// sending the list of userName to the client
-				// to let them make the window of active people
-				if (userNumber != updatedUserNumber) {
-					// new user number has been assigned
-					userNumber = updatedUserNumber;
-					for (int i = 0; i < st.size(); i++) {
-						System.out.println("The no of user are " + st.size());
-						System.out.println((st.get(i))); // ?????
-						updateClientList();
-
-					}
-				} else {
-
-					for (int i = 0; i < st.size(); i++) {
-						// sending client list to all clients
-						try {
-							st.get(i).oos.writeObject(null);
-						} catch (Exception e) {
-							// TODO: handle exception
-						}
-					}
-
-				}
-
-				// this thread has sent the message to
-				// all client
-
 				if (t != null) {
+					if (t.equals("exit")) {
+						st.remove(this);
+						System.out.println("Object is removed");
+					}
+					// sending the list of userName to the client
+					// to let them make the window of active people
+
+					updateClientList();
+
+					// this thread has sent the message to
+					// all client
+
 					System.out.println("" + this.thr.getName() + ": " + t);
 					for (int i = 0; i < st.size(); i++) {
 						st.get(i).oos.writeObject(this.thr.getName());
