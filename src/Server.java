@@ -53,7 +53,7 @@ class ServerThread implements Runnable {
 			ois = new ObjectInputStream(ClientSock.getInputStream());
 			this.thr = new Thread(this);
 			thr.start();
-			
+
 		} catch (Exception ex) {
 
 		}
@@ -71,10 +71,9 @@ class ServerThread implements Runnable {
 		// printing the userlist in the begining of
 		// creating a user thread in server
 		// and sending the list to all clients
-		
 
 		int userNumber = st.size();
-		while (true) { 
+		while (true) {
 			int updatedUserNumber = st.size();
 			try {
 				String t = (String) ois.readObject();
@@ -91,8 +90,19 @@ class ServerThread implements Runnable {
 						System.out.println("The no of user are " + st.size());
 						System.out.println((st.get(i))); // ?????
 						updateClientList();
-						
+
 					}
+				} else {
+
+					for (int i = 0; i < st.size(); i++) {
+						// sending client list to all clients
+						try {
+							st.get(i).oos.writeObject(null);
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+					}
+
 				}
 
 				// this thread has sent the message to

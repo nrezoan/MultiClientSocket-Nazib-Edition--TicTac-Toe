@@ -17,6 +17,10 @@ public class ReadThread implements Runnable {
 		try {
 
 			while (true) {
+				String clientName=(String)ois.readObject();
+				if(clientName!=null){
+					System.out.println(clientName);
+				}
 				String senderName = (String) ois.readObject();
 				String message=(String)ois.readObject();
 				if (message != null) {			
