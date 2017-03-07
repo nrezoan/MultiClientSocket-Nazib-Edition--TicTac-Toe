@@ -65,10 +65,12 @@ class ServerThread implements Runnable {
 			// reading the name from UserRegistraion window
 			String t = (String) ois.readObject();
 			this.thr.setName(t);
+			updateClientList();
+			
 		} catch (Exception e) {
 
 		}
-		// printing the userlist in the begining of
+		// printing the user list in the begining of
 		// creating a user thread in server
 		// and sending the list to all clients
 
@@ -112,7 +114,7 @@ class ServerThread implements Runnable {
 
 	public void updateClientList() {
 		
-		allClients=null;
+		allClients="";
 		for (int i = 0; i < st.size(); i++) {
 			
 			allClients = allClients + " " + st.get(i);
