@@ -17,6 +17,7 @@ public class ReadThread implements Runnable {
 
 	public void run() {
 		try {
+			this.chatWindow.getList("Diba");
 			ArrayList nameList;
 			String clientNameFirst=(String)ois.readObject();
 			 nameList = new ArrayList<String>(Arrays.asList(clientNameFirst.split(" ")));
@@ -41,8 +42,13 @@ public class ReadThread implements Runnable {
 		}
 
 	}
+<<<<<<< HEAD
 	
 	
 	
+=======
+
+
+>>>>>>> origin/master
 }
 

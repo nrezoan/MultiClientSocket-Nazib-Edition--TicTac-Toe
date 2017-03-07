@@ -2,6 +2,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -15,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 
 import java.awt.Color;
+import javax.swing.SwingConstants;
 
 public class ChatWindow extends JFrame implements ActionListener {
 
@@ -32,6 +34,9 @@ public class ChatWindow extends JFrame implements ActionListener {
 	boolean actionPerformed = false;
 	private ObjectOutputStream oos=null;
 	private JButton btnViewThreads;
+	private JScrollPane scrollPane_1;
+	private JList list;
+	DefaultListModel model; 
 
 	public ChatWindow(final ObjectOutputStream oos) {
 		super();
@@ -58,6 +63,9 @@ public class ChatWindow extends JFrame implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 51, 414, 228);
 		contentPane.add(scrollPane);
+		
+		msgArea = new JTextArea();
+		scrollPane.setViewportView(msgArea);
 		
 		btnLogout = new JButton("Logout");
 		btnLogout.addActionListener(new ActionListener() {
@@ -95,9 +103,22 @@ public class ChatWindow extends JFrame implements ActionListener {
 		btnViewThreads.setBounds(10, 17, 89, 23);
 		contentPane.add(btnViewThreads);
 		
-		msgArea = new JTextArea();
-		msgArea.setBounds(10, 51, 412, 226);
-		contentPane.add(msgArea);
+		JLabel lblNewLabel = new JLabel("Online Users");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(434, 21, 130, 19);
+		contentPane.add(lblNewLabel);
+		
+		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.setBounds(493, 290, 71, 35);
+		contentPane.add(btnRefresh);
+		
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(434, 51, 130, 228);
+		contentPane.add(scrollPane_1);
+		
+		model = new DefaultListModel();
+		list = new JList(model);
+		scrollPane_1.setViewportView(list);
 		
 	}
 
@@ -128,6 +149,11 @@ public class ChatWindow extends JFrame implements ActionListener {
 	public String getText() {
 		return mgsOut;
 	}
+	
+	public void getList(String arr){
+		model.addElement(arr);
+	}
+	
 
 	public boolean isActionPerformed() {
 		return actionPerformed;
