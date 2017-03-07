@@ -71,10 +71,10 @@ class ServerThread implements Runnable {
 		// printing the userlist in the begining of
 		// creating a user thread in server
 		// and sending the list to all clients
-		updateClientList();
+		
 
 		int userNumber = st.size();
-		while (true) {
+		while (true) { 
 			int updatedUserNumber = st.size();
 			try {
 				String t = (String) ois.readObject();
@@ -90,6 +90,8 @@ class ServerThread implements Runnable {
 					for (int i = 0; i < st.size(); i++) {
 						System.out.println("The no of user are " + st.size());
 						System.out.println((st.get(i))); // ?????
+						updateClientList();
+						
 					}
 				}
 
