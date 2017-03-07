@@ -18,7 +18,8 @@ public class Server {
 			ServSock = new ServerSocket(33333);
 			System.out.println("Server running at port 33333");
 
-
+			// OnlineChatWindow onlineChatWindow = new OnlineChatWindow();
+			// onlineChatWindow.setVisible(true);
 
 			while (true) {
 				ServerThread m = new ServerThread(ServSock.accept());
