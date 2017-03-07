@@ -91,14 +91,7 @@ public class ChatWindow extends JFrame implements ActionListener {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				DefaultListModel<ServerThread> model = new DefaultListModel<ServerThread>();
-//				for(ServerThread s:ServerThread.st){
-//				    model.addElement(s);
-//				}
-//				OnlineChatWindow.onlineList = new JList<ServerThread>(model);
 				
-				 
-				 
 			}
 		});
 		
