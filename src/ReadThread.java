@@ -19,8 +19,7 @@ public class ReadThread implements Runnable {
 			while (true) {
 				String senderName = (String) ois.readObject();
 				String message=(String)ois.readObject();
-				if (message != null) {
-					
+				if (message != null) {			
 					// sending the text to chatwindow
 					chatWindow.setText(senderName+": "+message);
 				}
