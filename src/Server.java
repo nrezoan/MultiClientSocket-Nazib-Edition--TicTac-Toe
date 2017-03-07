@@ -65,7 +65,7 @@ class ServerThread implements Runnable {
 			// reading the name from UserRegistraion window
 			String t = (String) ois.readObject();
 			this.thr.setName(t);
-			updateClientList();
+			oos.writeObject(allClients);
 			
 		} catch (Exception e) {
 
