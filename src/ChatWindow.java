@@ -116,6 +116,7 @@ public class ChatWindow extends JFrame implements ActionListener {
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				model.clear();
 				for(int i=0;i<clientList.size();i++){
 					System.out.println("line 120");
 					model.addElement(clientList.get(i));
