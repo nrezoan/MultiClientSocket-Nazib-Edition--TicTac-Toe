@@ -18,8 +18,6 @@ public class Server {
 			ServSock = new ServerSocket(33333);
 			System.out.println("Server running at port 33333");
 
-
-
 			while (true) {
 				ServerThread m = new ServerThread(ServSock.accept());
 			}
@@ -64,8 +62,8 @@ class ServerThread implements Runnable {
 			// reading the name from UserRegistraion window
 			String t = (String) ois.readObject();
 			this.thr.setName(t);
-			oos.writeObject(allClients);
-			
+			// oos.writeObject(allClients);
+
 		} catch (Exception e) {
 
 		}
@@ -85,8 +83,8 @@ class ServerThread implements Runnable {
 					// sending the list of userName to the client
 					// to let them make the window of active people
 
-					updateClientList();
-
+					System.out.println(appendString());
+					sendingAllClients(appendString());
 					// this thread has sent the message to
 					// all client
 
@@ -111,23 +109,26 @@ class ServerThread implements Runnable {
 		return this.thr.getName();
 	}
 
-	public void updateClientList() {
-		
-		allClients="";
-		for (int i = 0; i < st.size(); i++) {
-			
-			allClients = allClients + " " + st.get(i);
-		}
-		System.out.println("All clients are: " + allClients);
+	public void sendingAllClients(String str) {
 
 		for (int i = 0; i < st.size(); i++) {
 			// sending client list to all clients
 			try {
-				st.get(i).oos.writeObject(allClients);
+				 st.get(i).oos.writeObject(allClients);
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
 		}
 		System.out.println("Clients Updated");
+	}
+
+	public String appendString() {
+		allClients = "";
+		for (int i = 0; i < st.size(); i++) {
+
+			allClients = allClients + " " + st.get(i);
+		}
+		System.out.println("All clients are: " + allClients);
+		return allClients;
 	}
 }

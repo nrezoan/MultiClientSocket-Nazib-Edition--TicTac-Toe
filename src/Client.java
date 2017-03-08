@@ -22,7 +22,7 @@ public class Client {
 			ois = new ObjectInputStream(client.getInputStream());
 			userRegistration = new UserRegistration(oos);
 			userRegistration.setVisible(true);
-			String getAllClients=null;
+		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -35,8 +35,9 @@ public class ChatWindow extends JFrame implements ActionListener {
 	private ObjectOutputStream oos=null;
 	private JButton btnViewThreads;
 	private JScrollPane scrollPane_1;
-	private JList list;
-	DefaultListModel model; 
+	private JList<String> list;
+	DefaultListModel<String> model; 
+	protected String clientListName;
 
 	public ChatWindow(final ObjectOutputStream oos) {
 		super();
@@ -46,7 +47,7 @@ public class ChatWindow extends JFrame implements ActionListener {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		
 		msgText = new JTextField();
 		msgText.setBounds(10, 290, 298, 35);
 		contentPane.add(msgText);
@@ -108,16 +109,30 @@ public class ChatWindow extends JFrame implements ActionListener {
 		lblNewLabel.setBounds(434, 21, 130, 19);
 		contentPane.add(lblNewLabel);
 		
-		JButton btnRefresh = new JButton("Refresh");
-		btnRefresh.setBounds(493, 290, 71, 35);
-		contentPane.add(btnRefresh);
+		
+		model = new DefaultListModel<String>();
+	    list = new JList<String>(model);
+		
+//		JButton btnRefresh = new JButton("Refresh");
+//		btnRefresh.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				for(int i=0;i<arr.size();i++){
+//					System.out.println("line 120");
+//					model.addElement(arr.get(i));
+//					
+//				}
+//				
+//			}
+//		});
+//		btnRefresh.setBounds(493, 290, 71, 35);
+//		contentPane.add(btnRefresh);
 		
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(434, 51, 130, 228);
 		contentPane.add(scrollPane_1);
 		
-		model = new DefaultListModel();
-		list = new JList(model);
+		
+		
 		scrollPane_1.setViewportView(list);
 		
 	}
@@ -150,8 +165,8 @@ public class ChatWindow extends JFrame implements ActionListener {
 		return mgsOut;
 	}
 	
-	public void getList(String arr){
-		model.addElement(arr);
+	public void setList(String str){
+		clientListName=str;
 	}
 	
 
