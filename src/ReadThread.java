@@ -32,7 +32,7 @@ public class ReadThread implements Runnable {
 				String clientName = (String) ois.readObject();
 				System.out.println(clientName);
 				nameList = new ArrayList<String>(Arrays.asList(clientName.split(" ")));
-			//	chatWindow.clientListName=clientName;
+				chatWindow.setList(nameList);
 				
 
 				String senderName = (String) ois.readObject();

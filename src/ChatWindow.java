@@ -37,7 +37,7 @@ public class ChatWindow extends JFrame implements ActionListener {
 	private JScrollPane scrollPane_1;
 	private JList<String> list;
 	DefaultListModel<String> model; 
-	protected String clientListName;
+	protected static ArrayList<String> clientList;
 
 	public ChatWindow(final ObjectOutputStream oos) {
 		super();
@@ -113,19 +113,19 @@ public class ChatWindow extends JFrame implements ActionListener {
 		model = new DefaultListModel<String>();
 	    list = new JList<String>(model);
 		
-//		JButton btnRefresh = new JButton("Refresh");
-//		btnRefresh.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				for(int i=0;i<arr.size();i++){
-//					System.out.println("line 120");
-//					model.addElement(arr.get(i));
-//					
-//				}
-//				
-//			}
-//		});
-//		btnRefresh.setBounds(493, 290, 71, 35);
-//		contentPane.add(btnRefresh);
+		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for(int i=0;i<clientList.size();i++){
+					System.out.println("line 120");
+					model.addElement(clientList.get(i));
+					
+				}
+				
+			}
+		});
+		btnRefresh.setBounds(493, 290, 71, 35);
+		contentPane.add(btnRefresh);
 		
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(434, 51, 130, 228);
@@ -161,12 +161,12 @@ public class ChatWindow extends JFrame implements ActionListener {
 		msgArea.setText(wholeText);
 	}
 
-	public String getText() {
+	public static String getText() {
 		return mgsOut;
 	}
 	
-	public void setList(String str){
-		clientListName=str;
+	public static void setList(ArrayList<String> list){
+		clientList=list;
 	}
 	
 
