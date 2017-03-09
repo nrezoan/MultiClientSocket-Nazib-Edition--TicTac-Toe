@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -112,7 +114,21 @@ public class ChatWindow extends JFrame implements ActionListener {
 		
 		model = new DefaultListModel<String>();
 	    list = new JList<String>(model);
-		
+	    
+	    list.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Auto-generated method stub
+				if(!e.getValueIsAdjusting()){
+					String temp=list.getSelectedValue().toString();
+					setText(temp);
+				}
+				
+			}
+		});
+		//model element has been added to the refresh button below
+	    //if button is pressed all online user is shown
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
