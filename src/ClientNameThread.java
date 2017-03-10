@@ -22,14 +22,24 @@ public class ClientNameThread extends Thread {
 		// TODO Auto-generated method stub
 		super.run();
 		int clientNumber = clientThreadList.size();
-		System.out.println();
 		while (true) {
+			
 			int clientNumberUpdated = clientThreadList.size();
 			
+//			System.out.println("the clientNumber is " + clientNumber);
+//			System.out.println("the clientNumberUpdated is " + clientNumberUpdated);
+			
 			if (clientNumber != clientNumberUpdated) {
-				System.out.println("clientNumber "+clientNumber+"clientNumberUpdated "+clientNumberUpdated);
+				System.out.println("I am here");
 				sendingAllClients(appendString());
-				clientNumber = clientNumberUpdated;
+				System.out.println("clientNumber "+clientNumber+"clientNumberUpdated "+clientNumberUpdated);
+			    clientNumber = clientNumberUpdated;
+			    try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
 		}
