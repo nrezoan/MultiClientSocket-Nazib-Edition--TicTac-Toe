@@ -94,17 +94,7 @@ public class ChatWindow extends JFrame implements ActionListener {
 		name.setBounds(297, 21, 46, 14);
 		contentPane.add(name);
 		
-		btnViewThreads = new JButton("View Threads");
-		btnViewThreads.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
 		
-		btnViewThreads.setBounds(10, 17, 89, 23);
-		contentPane.add(btnViewThreads);
 		
 		JLabel lblNewLabel = new JLabel("Online Users");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -168,7 +158,10 @@ public class ChatWindow extends JFrame implements ActionListener {
 		msgText.setText(null);//emptying the typing area		
 		// TODO Auto-generated method stub
 	}
-
+/**
+ * This method will set Text to the main J Text Area
+ * @param temp
+ */
 	public static void setText(String temp) {
 		if(wholeText.equals("")){
 			wholeText=temp;
@@ -178,20 +171,16 @@ public class ChatWindow extends JFrame implements ActionListener {
 		msgArea.setText(wholeText);
 	}
 
-	public static String getText() {
-		return mgsOut;
-	}
-	
+	/**
+	 * 
+	 * @param list ArrayList will bring the list to Chat Window
+	 */
 	public static void setList(ArrayList<String> list){
 		clientList=list;
 	}
 	
 
-	public boolean isActionPerformed() {
-		return actionPerformed;
-	}
+	
 
-	public void setActionPerformed(boolean bal) {
-		actionPerformed = bal;
-	}
+	
 }
