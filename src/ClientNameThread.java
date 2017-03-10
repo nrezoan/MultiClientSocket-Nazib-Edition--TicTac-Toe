@@ -25,14 +25,14 @@ public class ClientNameThread extends Thread {
 
 		while (true) {
 			try {
-			int clientNumberUpdated = clientThreadList.size();
-			
-			if (clientNumber != clientNumberUpdated) {
-				System.out.println("clientNumber " + clientNumber + "clientNumberUpdated " + clientNumberUpdated);
-				sendingAllClients(appendString());
-				clientNumber = clientNumberUpdated;
-			} 
-		
+				int clientNumberUpdated = clientThreadList.size();
+
+				if (clientNumber != clientNumberUpdated) {
+					System.out.println(appendString());
+
+					clientNumber = clientNumberUpdated;
+				}
+
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -47,7 +47,7 @@ public class ClientNameThread extends Thread {
 			// sending client list to all clients
 			try {
 				// clientThread.clientThreadList.get(i).oosForClient.writeObject(allClients);
-				System.out.println(clientThreadList.get(i).getName());
+				// System.out.println(clientThreadList.get(i).getName());
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -58,8 +58,10 @@ public class ClientNameThread extends Thread {
 	public synchronized String appendString() {
 		allClients = "";
 		for (int i = 0; i < clientThreadList.size(); i++) {
-
-			allClients = allClients + " " + clientThreadList.get(i).toString();
+			
+			
+			
+			allClients = allClients + " " + clientThreadList.get(i).getName();
 		}
 		// System.out.println("All clients are: " + allClients);
 		return allClients;

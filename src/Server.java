@@ -46,6 +46,7 @@ class ClientThread implements Runnable {
 	ArrayList<ClientThread> clientThreadList;
 	ObjectOutputStream oosForClient;
 	static int client_count = 0;
+	boolean nameFlag=false;
 
 	ClientThread(Socket client, Socket clientNameSocket, ArrayList<ClientThread> clientThreadList) {
 		try {
@@ -59,7 +60,9 @@ class ClientThread implements Runnable {
 			ois = new ObjectInputStream(ClientSock.getInputStream());
 
 			oosForClient = new ObjectOutputStream(clientNameSocket.getOutputStream());
-			this.thr = new Thread(this);
+			String t = (String) ois.readObject();
+			this.thr = new Thread(this,t);
+			
 			clientThreadList.add(this);
 			thr.start();
 		} catch (Exception ex) {
@@ -72,7 +75,8 @@ class ClientThread implements Runnable {
 		try {
 			// reading the name from UserRegistraion window
 			String t = (String) ois.readObject();
-			this.thr.setName(t);
+			
+			
 
 		} catch (Exception e) {
 			System.err.println("error at 78");
@@ -117,6 +121,12 @@ class ClientThread implements Runnable {
 
 	public String toString() {
 		return this.thr.getName();
+	}
+	public boolean isNameSet(){
+		return nameFlag;
+	}
+	public void setName(String name){
+		this.thr.setName(name);
 	}
 
 }
