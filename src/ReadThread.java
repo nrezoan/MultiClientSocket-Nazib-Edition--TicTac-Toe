@@ -19,20 +19,7 @@ public class ReadThread implements Runnable {
 
 	public void run() {
 		try {
-
-			 String clientNameFirst = (String) ois.readObject();
-			 nameList = new
-			 ArrayList<String>(Arrays.asList(clientNameFirst.split(" ")));
-			 chatWindow.setList(nameList);
-			
 			while (true) {
-
-				String clientName = (String) ois.readObject();
-				System.out.println(clientName);
-				nameList = new ArrayList<String>(Arrays.asList(clientName.split(" ")));
-				chatWindow.setList(nameList);
-				
-
 				String senderName = (String) ois.readObject();
 				String message = (String) ois.readObject();
 				if (message != null) {

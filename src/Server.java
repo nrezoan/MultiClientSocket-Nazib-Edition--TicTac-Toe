@@ -11,18 +11,22 @@ import java.util.logging.Logger;
 public class Server {
 
 	private ServerSocket ServSock;
+	private ServerSocket servSockClientName;
+	private ArrayList<ClientThread> clientThreadList = new ArrayList<>();
 
 	Server() {
 		try {
-
 			ServSock = new ServerSocket(33333);
+			servSockClientName = new ServerSocket(44444);
 			System.out.println("Server running at port 33333");
-
-			while (true) {
-				ServerThread m = new ServerThread(ServSock.accept());
+			ClientNameThread m2 = new ClientNameThread( clientThreadList);//?????
+			m2.start();
+			while(true){
+				ClientThread clientThread=new ClientThread(ServSock.accept(),servSockClientName.accept(),clientThreadList);
 			}
+			
 		} catch (Exception e) {
-			System.out.println("Server starts:" + e);
+			System.err.println("error at 31");
 		}
 	}
 
@@ -31,28 +35,34 @@ public class Server {
 	}
 }
 
-class ServerThread implements Runnable {
+class ClientThread implements Runnable {
 
 	private Socket ClientSock;
 	private Thread thr;
+	Socket clientNameSocket;
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
-	static ArrayList<ServerThread> st = new ArrayList<>();
+	ArrayList<ClientThread> clientThreadList;
+	ObjectOutputStream oosForClient;
 	static int client_count = 0;
-	String allClients = "";
 
-	ServerThread(Socket client) {
+	ClientThread(Socket client, Socket clientNameSocket, ArrayList<ClientThread> clientThreadList) {
 		try {
+			this.clientNameSocket = clientNameSocket;
+			this.clientThreadList = clientThreadList;
 			this.ClientSock = client;
-			st.add(this);
+			
 			client_count++;
 			oos = new ObjectOutputStream(ClientSock.getOutputStream());
+			
 			ois = new ObjectInputStream(ClientSock.getInputStream());
+			
+			oosForClient = new ObjectOutputStream(clientNameSocket.getOutputStream());
 			this.thr = new Thread(this);
+			clientThreadList.add(this);
 			thr.start();
-
 		} catch (Exception ex) {
-
+			System.err.println("error at 32");
 		}
 	}
 
@@ -62,74 +72,48 @@ class ServerThread implements Runnable {
 			// reading the name from UserRegistraion window
 			String t = (String) ois.readObject();
 			this.thr.setName(t);
-			appendString();
-			oos.writeObject(appendString());
-
+			
 		} catch (Exception e) {
-
+			System.err.println("error at 78");
+			System.err.println(e);
 		}
-		// printing the user list in the begining of
-		// creating a user thread in server
-		// and sending the list to all clients
 
 		while (true) {
 
 			try {
+
 				String t = (String) ois.readObject();
 				if (t != null) {
 					if (t.equals("exit")) {
-						st.remove(this);
+						clientThreadList.remove(this);
 						System.out.println("Object is removed");
 					}
-					// sending the list of userName to the client
-					// to let them make the window of active people
 
-					System.out.println(appendString());
-					sendingAllClients(appendString());
 					// this thread has sent the message to
 					// all client
-
 					System.out.println("" + this.thr.getName() + ": " + t);
-					for (int i = 0; i < st.size(); i++) {
-						st.get(i).oos.writeObject(this.thr.getName());
+					for (int i = 0; i < clientThreadList.size(); i++) {
+						clientThreadList.get(i).oos.writeObject(this.thr.getName());
 						// sending one client name and
 						// message to all other client
-						st.get(i).oos.writeObject(t);
+						clientThreadList.get(i).oos.writeObject(t);
 					}
 				}
 
 			} catch (Exception ex) {
-
+				System.err.println("error at 103");
 			}
 
 		}
 
+	}
+	
+	public String getName() {
+		return this.thr.getName();
 	}
 
 	public String toString() {
 		return this.thr.getName();
 	}
 
-	public void sendingAllClients(String str) {
-
-		for (int i = 0; i < st.size(); i++) {
-			// sending client list to all clients
-			try {
-				 st.get(i).oos.writeObject(allClients);
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-		}
-		System.out.println("Clients Updated");
-	}
-
-	public String appendString() {
-		allClients = "";
-		for (int i = 0; i < st.size(); i++) {
-
-			allClients = allClients + " " + st.get(i);
-		}
-		System.out.println("All clients are: " + allClients);
-		return allClients;
-	}
 }
