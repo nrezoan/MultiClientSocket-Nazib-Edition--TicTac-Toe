@@ -46,7 +46,7 @@ class ClientThread implements Runnable {
 	ArrayList<ClientThread> clientThreadList;
 	ObjectOutputStream oosForClient;
 	static int client_count = 0;
-	boolean nameFlag=false;
+	boolean nameFlag = false;
 
 	ClientThread(Socket client, Socket clientNameSocket, ArrayList<ClientThread> clientThreadList) {
 		try {
@@ -61,8 +61,8 @@ class ClientThread implements Runnable {
 
 			oosForClient = new ObjectOutputStream(clientNameSocket.getOutputStream());
 			String t = (String) ois.readObject();
-			this.thr = new Thread(this,t);
-			
+			this.thr = new Thread(this, t);
+
 			clientThreadList.add(this);
 			thr.start();
 		} catch (Exception ex) {
@@ -72,37 +72,27 @@ class ClientThread implements Runnable {
 
 	public void run() {
 
-		try {
-			// reading the name from UserRegistraion window
-			String t = (String) ois.readObject();
-			
-			
-
-		} catch (Exception e) {
-			System.err.println("error at 78");
-			System.err.println(e);
-		}
-
 		while (true) {
 
 			try {
-				synchronized (clientThreadList) {
-					String t = (String) ois.readObject();
-					if (t != null) {
-						if (t.equals("exit")) {
-							clientThreadList.remove(this);
-							System.out.println("Object is removed");
-						}
 
-						// this thread has sent the message to
-						// all client
-						System.out.println("" + this.thr.getName() + ": " + t);
+				String t = (String) ois.readObject();
+				if (t != null) {
+					if (t.equals("exit")) {
+						clientThreadList.remove(this);
+						System.out.println("Object is removed");
+					}
+
+					// this thread has sent the message to
+					// all client
+					else {
 						for (int i = 0; i < clientThreadList.size(); i++) {
 							clientThreadList.get(i).oos.writeObject(this.thr.getName());
 							// sending one client name and
 							// message to all other client
 							clientThreadList.get(i).oos.writeObject(t);
 						}
+
 					}
 				}
 
@@ -122,10 +112,12 @@ class ClientThread implements Runnable {
 	public String toString() {
 		return this.thr.getName();
 	}
-	public boolean isNameSet(){
+
+	public boolean isNameSet() {
 		return nameFlag;
 	}
-	public void setName(String name){
+
+	public void setName(String name) {
 		this.thr.setName(name);
 	}
 
