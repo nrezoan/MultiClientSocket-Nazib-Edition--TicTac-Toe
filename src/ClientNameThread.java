@@ -22,21 +22,12 @@ public class ClientNameThread extends Thread {
 		// TODO Auto-generated method stub
 		super.run();
 		int clientNumber = clientThreadList.size();
-<<<<<<< HEAD
 
 		while (true) {
 			try {
-=======
-		while (true) {
-			
->>>>>>> origin/master
 			int clientNumberUpdated = clientThreadList.size();
 			
-//			System.out.println("the clientNumber is " + clientNumber);
-//			System.out.println("the clientNumberUpdated is " + clientNumberUpdated);
-			
 			if (clientNumber != clientNumberUpdated) {
-<<<<<<< HEAD
 				System.out.println("clientNumber " + clientNumber + "clientNumberUpdated " + clientNumberUpdated);
 				sendingAllClients(appendString());
 				clientNumber = clientNumberUpdated;
@@ -46,18 +37,6 @@ public class ClientNameThread extends Thread {
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-=======
-				System.out.println("I am here");
-				sendingAllClients(appendString());
-				System.out.println("clientNumber "+clientNumber+"clientNumberUpdated "+clientNumberUpdated);
-			    clientNumber = clientNumberUpdated;
-			    try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
->>>>>>> origin/master
 			}
 		}
 	}
