@@ -19,12 +19,13 @@ public class Server {
 			ServSock = new ServerSocket(33333);
 			servSockClientName = new ServerSocket(44444);
 			System.out.println("Server running at port 33333");
-			ClientNameThread m2 = new ClientNameThread( clientThreadList);//?????
+			ClientNameThread m2 = new ClientNameThread(clientThreadList);// ?????
 			m2.start();
-			while(true){
-				ClientThread clientThread=new ClientThread(ServSock.accept(),servSockClientName.accept(),clientThreadList);
+			while (true) {
+				ClientThread clientThread = new ClientThread(ServSock.accept(), servSockClientName.accept(),
+						clientThreadList);
 			}
-			
+
 		} catch (Exception e) {
 			System.err.println("error at 31");
 		}
@@ -51,12 +52,12 @@ class ClientThread implements Runnable {
 			this.clientNameSocket = clientNameSocket;
 			this.clientThreadList = clientThreadList;
 			this.ClientSock = client;
-			
+
 			client_count++;
 			oos = new ObjectOutputStream(ClientSock.getOutputStream());
-			
+
 			ois = new ObjectInputStream(ClientSock.getInputStream());
-			
+
 			oosForClient = new ObjectOutputStream(clientNameSocket.getOutputStream());
 			this.thr = new Thread(this);
 			clientThreadList.add(this);
@@ -72,7 +73,7 @@ class ClientThread implements Runnable {
 			// reading the name from UserRegistraion window
 			String t = (String) ois.readObject();
 			this.thr.setName(t);
-			
+
 		} catch (Exception e) {
 			System.err.println("error at 78");
 			System.err.println(e);
@@ -81,33 +82,35 @@ class ClientThread implements Runnable {
 		while (true) {
 
 			try {
+				synchronized (clientThreadList) {
+					String t = (String) ois.readObject();
+					if (t != null) {
+						if (t.equals("exit")) {
+							clientThreadList.remove(this);
+							System.out.println("Object is removed");
+						}
 
-				String t = (String) ois.readObject();
-				if (t != null) {
-					if (t.equals("exit")) {
-						clientThreadList.remove(this);
-						System.out.println("Object is removed");
-					}
-
-					// this thread has sent the message to
-					// all client
-					System.out.println("" + this.thr.getName() + ": " + t);
-					for (int i = 0; i < clientThreadList.size(); i++) {
-						clientThreadList.get(i).oos.writeObject(this.thr.getName());
-						// sending one client name and
-						// message to all other client
-						clientThreadList.get(i).oos.writeObject(t);
+						// this thread has sent the message to
+						// all client
+						System.out.println("" + this.thr.getName() + ": " + t);
+						for (int i = 0; i < clientThreadList.size(); i++) {
+							clientThreadList.get(i).oos.writeObject(this.thr.getName());
+							// sending one client name and
+							// message to all other client
+							clientThreadList.get(i).oos.writeObject(t);
+						}
 					}
 				}
 
-			} catch (Exception ex) {
+			}
+
+			catch (Exception ex) {
 				System.err.println("error at 103");
 			}
 
 		}
-
 	}
-	
+
 	public String getName() {
 		return this.thr.getName();
 	}
