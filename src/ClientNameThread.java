@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class ClientNameThread extends Thread {
 
-	ClientThread clientThread;
+	
 	String allClients = "";
 
 	ArrayList<ClientThread> clientThreadList;
@@ -28,7 +28,7 @@ public class ClientNameThread extends Thread {
 				int clientNumberUpdated = clientThreadList.size();
 
 				if (clientNumber != clientNumberUpdated) {
-					System.out.println(appendString());
+					sendingAllClients(appendString());
 
 					clientNumber = clientNumberUpdated;
 				}
@@ -46,7 +46,7 @@ public class ClientNameThread extends Thread {
 		for (int i = 0; i < clientThreadList.size(); i++) {
 			// sending client list to all clients
 			try {
-				 clientThread.clientThreadList.get(i).oosForClient.writeObject(allClients);
+				 clientThreadList.get(i).oosForClient.writeObject(allClients);
 				
 			} catch (Exception e) {
 				// TODO: handle exception

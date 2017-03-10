@@ -62,7 +62,7 @@ class ClientThread implements Runnable {
 			oosForClient = new ObjectOutputStream(clientNameSocket.getOutputStream());
 			String t = (String) ois.readObject();
 			this.thr = new Thread(this, t);
-
+			oosForClient.writeObject("bla kla chula mala onek bish");
 			clientThreadList.add(this);
 			thr.start();
 		} catch (Exception ex) {
@@ -80,7 +80,8 @@ class ClientThread implements Runnable {
 				if (t != null) {
 					if (t.equals("exit")) {
 						clientThreadList.remove(this);
-						System.out.println("Object is removed");
+						return;
+						
 					}
 
 					// this thread has sent the message to

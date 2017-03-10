@@ -21,12 +21,13 @@ public class ReadClientNameThread extends Thread {
 
 		while (true) {
 			try {
+				String clientName="";
 				System.out.println("i am here dying alone");
-				String clientName = (String) ois2TakingUserName.readObject();
+				clientName = (String) ois2TakingUserName.readObject();
 				System.out.println(clientName);
 				ArrayList<String> nameList = new ArrayList<String>(Arrays.asList(clientName.split(" ")));
 				chatWindow.setList(nameList);// this will set the online user to
-											// the chat window
+												// the chat window
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -39,7 +40,7 @@ public class ReadClientNameThread extends Thread {
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}	
+			}
 		}
 	}
 }
