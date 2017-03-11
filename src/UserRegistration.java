@@ -16,7 +16,7 @@ public class UserRegistration extends JFrame {
 	private JTextField userNameTextField;
 	private JPanel contentPane;
 	private static String userName;
-	public UserRegistration( final ObjectOutputStream oos) {
+	public UserRegistration(  final ChatWindow chatWindow,  final ObjectOutputStream oos) {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -39,8 +39,7 @@ public class UserRegistration extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				userName=userNameTextField.getText();
 				try {
-					oos.writeObject(userName);
-					ChatWindow chatWindow = new ChatWindow(oos);
+					oos.writeObject(userName);		
 					chatWindow.setVisible(true);
 					dispose();
 				} catch (IOException e) {

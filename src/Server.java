@@ -12,18 +12,23 @@ public class Server {
 
 	private ServerSocket ServSock;
 	private ServerSocket servSockClientName;
+	private ServerSocket servSockRequestingPair;
+	RequestingForPair forPair=null;
 	private ArrayList<ClientThread> clientThreadList = new ArrayList<>();
 
 	Server() {
 		try {
 			ServSock = new ServerSocket(33333);
 			servSockClientName = new ServerSocket(44444);
+			servSockRequestingPair=new ServerSocket(55555);
+			//object for requesting pair client
+			forPair=new RequestingForPair(servSockRequestingPair.accept(), clientThreadList);
 			System.out.println("Server running at port 33333");
 			ClientNameThread m2 = new ClientNameThread(clientThreadList);// ?????
 			m2.start();
 			while (true) {
 				ClientThread clientThread = new ClientThread(ServSock.accept(), servSockClientName.accept(),
-						clientThreadList);
+						clientThreadList,forPair);
 			}
 
 		} catch (Exception e) {
@@ -38,21 +43,24 @@ public class Server {
 
 class ClientThread implements Runnable {
 
-	private Socket ClientSock;
-	private Thread thr;
+	private Socket ClientSock;	
 	Socket clientNameSocket;
+	
+	private Thread thr;
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
 	ArrayList<ClientThread> clientThreadList;
 	ObjectOutputStream oosForClient;
 	static int client_count = 0;
 	boolean nameFlag = false;
+	RequestingForPair requestingForPair=null;
 
-	ClientThread(Socket client, Socket clientNameSocket, ArrayList<ClientThread> clientThreadList) {
+	ClientThread(Socket client, Socket clientNameSocket, ArrayList<ClientThread> clientThreadList, RequestingForPair requestingForPair) {
 		try {
 			this.clientNameSocket = clientNameSocket;
 			this.clientThreadList = clientThreadList;
 			this.ClientSock = client;
+			this.requestingForPair=requestingForPair;
 
 			client_count++;
 			oos = new ObjectOutputStream(ClientSock.getOutputStream());
@@ -61,9 +69,15 @@ class ClientThread implements Runnable {
 
 			oosForClient = new ObjectOutputStream(clientNameSocket.getOutputStream());
 			String t = (String) ois.readObject();
+
 			this.thr = new Thread(this, t);
-			oosForClient.writeObject("bla kla chula mala onek bish");
+
 			clientThreadList.add(this);
+			/*
+			 * block will decide who will chat with
+			 * 
+			 * 
+			 */
 			thr.start();
 		} catch (Exception ex) {
 			System.err.println("error at 32");
@@ -81,7 +95,7 @@ class ClientThread implements Runnable {
 					if (t.equals("exit")) {
 						clientThreadList.remove(this);
 						return;
-						
+
 					}
 
 					// this thread has sent the message to

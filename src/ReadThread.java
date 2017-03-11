@@ -1,4 +1,5 @@
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -9,7 +10,7 @@ public class ReadThread implements Runnable {
 	ChatWindow chatWindow;
 	private ArrayList nameList;
 
-	public ReadThread(ObjectInputStream ois, ChatWindow chatWindow) {
+	public ReadThread(ObjectInputStream ois,  ChatWindow chatWindow) {
 		this.ois = ois;
 		this.thr = new Thread(this);
 		this.chatWindow = chatWindow;
