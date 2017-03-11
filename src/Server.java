@@ -22,12 +22,12 @@ public class Server {
 			servSockClientName = new ServerSocket(44444);
 			servSockRequestingPair=new ServerSocket(55555);
 			//object for requesting pair client
-			forPair=new RequestingForPair(servSockRequestingPair.accept(), clientThreadList);
+			forPair=new RequestingForPair( clientThreadList);
 			System.out.println("Server running at port 33333");
 			ClientNameThread m2 = new ClientNameThread(clientThreadList);// ?????
 			m2.start();
 			while (true) {
-				ClientThread clientThread = new ClientThread(ServSock.accept(), servSockClientName.accept(),
+				ClientThread clientThread = new ClientThread(ServSock.accept(), servSockClientName.accept(),servSockRequestingPair.accept(),
 						clientThreadList,forPair);
 			}
 
@@ -54,13 +54,15 @@ class ClientThread implements Runnable {
 	static int client_count = 0;
 	boolean nameFlag = false;
 	RequestingForPair requestingForPair=null;
+	Socket SocketRequestingPair=null;
 
-	ClientThread(Socket client, Socket clientNameSocket, ArrayList<ClientThread> clientThreadList, RequestingForPair requestingForPair) {
+	ClientThread(Socket client, Socket clientNameSocket, Socket SocketRequestingPair , ArrayList<ClientThread> clientThreadList, RequestingForPair requestingForPair) {
 		try {
 			this.clientNameSocket = clientNameSocket;
 			this.clientThreadList = clientThreadList;
 			this.ClientSock = client;
 			this.requestingForPair=requestingForPair;
+			this.SocketRequestingPair=SocketRequestingPair;
 
 			client_count++;
 			oos = new ObjectOutputStream(ClientSock.getOutputStream());
@@ -85,6 +87,15 @@ class ClientThread implements Runnable {
 	}
 
 	public void run() {
+		
+			try{
+				ClientThread clientThread=requestingForPair.matchingPair(SocketRequestingPair);
+				System.out.println("Name send from client "+clientThread.getName());
+			}
+			catch(NullPointerException nl){
+				System.err.println("NO NAME SEND error at SERVER LINe 93");
+			}
+		
 
 		while (true) {
 
