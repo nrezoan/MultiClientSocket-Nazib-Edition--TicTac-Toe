@@ -13,6 +13,7 @@ public class Server {
 	private ServerSocket ServSock;
 	private ServerSocket servSockClientName;
 	private ServerSocket servSockRequestingPair;
+	ServerSocket servSockRecievingResponse;
 	RequestingForPair forPair=null;
 	private ArrayList<ClientThread> clientThreadList = new ArrayList<>();
 
@@ -21,13 +22,16 @@ public class Server {
 			ServSock = new ServerSocket(33333);
 			servSockClientName = new ServerSocket(44444);
 			servSockRequestingPair=new ServerSocket(55555);
+			System.out.println("i am at line 94 Server");
+			servSockRecievingResponse = new ServerSocket(50000);
 			//object for requesting pair client
+			
 			forPair=new RequestingForPair( clientThreadList);
 			System.out.println("Server running at port 33333");
 			ClientNameThread m2 = new ClientNameThread(clientThreadList);// ?????
 			m2.start();
 			while (true) {
-				ClientThread clientThread = new ClientThread(ServSock.accept(), servSockClientName.accept(),servSockRequestingPair.accept(),
+				ClientThread clientThread = new ClientThread(ServSock.accept(), servSockClientName.accept(),servSockRequestingPair.accept(),servSockRecievingResponse.accept(),
 						clientThreadList,forPair);
 			}
 
@@ -55,21 +59,31 @@ class ClientThread implements Runnable {
 	boolean nameFlag = false;
 	RequestingForPair requestingForPair=null;
 	Socket SocketRequestingPair=null;
-
-	ClientThread(Socket client, Socket clientNameSocket, Socket SocketRequestingPair , ArrayList<ClientThread> clientThreadList, RequestingForPair requestingForPair) {
+	ObjectOutputStream oosRequestPair=null;
+	ObjectInputStream oisRequestPair=null;
+	Socket SocketrecievingResponse=null;
+	ObjectOutputStream oosResponsePair=null;
+	ObjectInputStream oisResponsePair=null;
+	ClientThread(Socket client, Socket clientNameSocket, Socket SocketRequestingPair , Socket SocketrecievingResponse, ArrayList<ClientThread> clientThreadList, RequestingForPair requestingForPair) {
 		try {
+			
 			this.clientNameSocket = clientNameSocket;
 			this.clientThreadList = clientThreadList;
 			this.ClientSock = client;
 			this.requestingForPair=requestingForPair;
 			this.SocketRequestingPair=SocketRequestingPair;
-
+			this.SocketrecievingResponse=SocketrecievingResponse;
+			this.oosRequestPair=new ObjectOutputStream(SocketRequestingPair.getOutputStream());
+			this.oisRequestPair = new ObjectInputStream(SocketRequestingPair.getInputStream());
+			this.oosResponsePair=new ObjectOutputStream(SocketrecievingResponse.getOutputStream());
+			this.oisResponsePair=new ObjectInputStream(SocketrecievingResponse.getInputStream());
 			client_count++;
 			oos = new ObjectOutputStream(ClientSock.getOutputStream());
 
 			ois = new ObjectInputStream(ClientSock.getInputStream());
 
 			oosForClient = new ObjectOutputStream(clientNameSocket.getOutputStream());
+			
 			String t = (String) ois.readObject();
 
 			this.thr = new Thread(this, t);
@@ -80,6 +94,7 @@ class ClientThread implements Runnable {
 			 * 
 			 * 
 			 */
+			
 			thr.start();
 		} catch (Exception ex) {
 			System.err.println("error at 32");
@@ -89,11 +104,14 @@ class ClientThread implements Runnable {
 	public void run() {
 		
 			try{
-				ClientThread clientThread=requestingForPair.matchingPair(SocketRequestingPair);
-				System.out.println("Name send from client "+clientThread.getName());
+				ClientThread clientThreadToPair=requestingForPair.matchingPair(oisRequestPair);
+				requestingForPair.sendingRequestForPair(clientThreadToPair, this);
+				System.out.println("Name send from client "+clientThreadToPair.getName());
+				//receiving response from userClient 2
+				requestingForPair.recievingResponse(clientThreadToPair);
 			}
 			catch(NullPointerException nl){
-				System.err.println("NO NAME SEND error at SERVER LINe 93");
+				System.err.println("NO NAME SEND error at SERVER LINe 109");
 			}
 		
 
@@ -117,6 +135,7 @@ class ClientThread implements Runnable {
 							// sending one client name and
 							// message to all other client
 							clientThreadList.get(i).oos.writeObject(t);
+							System.out.println(t);
 						}
 
 					}

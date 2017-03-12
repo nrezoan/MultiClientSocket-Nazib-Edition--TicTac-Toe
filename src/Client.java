@@ -10,6 +10,7 @@ public class Client {
 		ObjectOutputStream oos = null;
 		ObjectOutputStream oosPairRequest=null;
 		ObjectInputStream ois = null;
+		ObjectInputStream oisResponse = null;
 		ObjectInputStream ois2TakingUserName = null;
 		ChatWindow chatWindow = null;
 		UserRegistration userRegistration = null;
@@ -18,17 +19,19 @@ public class Client {
 		int serverPort1 = 33333;
 		int serverPort2 = 44444;
 		int serverPort3=55555;
+		int serverPort4=50000;
 		try {
 			Socket client = new Socket(serverAddress, serverPort1);
 			Socket clientNameSocket = new Socket(serverAddress, serverPort2);
 			Socket clientPairRequestSocket=new Socket(serverAddress,serverPort3);
+			Socket clientPairResponseSocket=new Socket(serverAddress,serverPort4);
 			Scanner input = new Scanner(System.in);
 			// connections established
 			oos = new ObjectOutputStream(client.getOutputStream());
 			oosPairRequest=new ObjectOutputStream(clientPairRequestSocket.getOutputStream());
 			ois = new ObjectInputStream(client.getInputStream());
 			ois2TakingUserName = new ObjectInputStream(clientNameSocket.getInputStream());
-			
+			//oisResponse =new ObjectInputStream(clientPairResponseSocket.getInputStream());
 			chatWindow=new ChatWindow(oos,oosPairRequest);
 			userRegistration = new UserRegistration(chatWindow,oos);
 			userRegistration.setVisible(true);
