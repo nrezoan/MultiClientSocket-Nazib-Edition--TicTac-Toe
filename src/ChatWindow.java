@@ -180,11 +180,14 @@ public class ChatWindow extends JFrame implements ActionListener {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/**
 	 * This method will set Text to the main J Text Area
 	 * 
 	 * @param temp
 	 */
+=======
+>>>>>>> parent of 4439a90... First Final Version of chat client
 =======
 >>>>>>> parent of 4439a90... First Final Version of chat client
 =======
@@ -203,6 +206,7 @@ public class ChatWindow extends JFrame implements ActionListener {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/**
 	 * 
 	 * @param list
@@ -213,6 +217,8 @@ public class ChatWindow extends JFrame implements ActionListener {
 	}
 
 =======
+=======
+>>>>>>> parent of 4439a90... First Final Version of chat client
 =======
 >>>>>>> parent of 4439a90... First Final Version of chat client
 =======
@@ -235,6 +241,9 @@ public class ChatWindow extends JFrame implements ActionListener {
 	}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 4439a90... First Final Version of chat client
+=======
 >>>>>>> parent of 4439a90... First Final Version of chat client
 =======
 >>>>>>> parent of 4439a90... First Final Version of chat client
