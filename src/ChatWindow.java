@@ -110,7 +110,7 @@ public class ChatWindow extends JFrame implements ActionListener {
 		btnViewThreads.setBounds(10, 17, 89, 23);
 		contentPane.add(btnViewThreads);
 		
->>>>>>> parent of 4439a90... First Final Version of chat client
+
 		JLabel lblNewLabel = new JLabel("Online Users");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(434, 21, 130, 19);
