@@ -94,22 +94,6 @@ public class ChatWindow extends JFrame implements ActionListener {
 		name.setText(UserRegistration.getUserName());
 		name.setBounds(297, 21, 46, 14);
 		contentPane.add(name);
-<<<<<<< HEAD
-
-=======
-		
-		btnViewThreads = new JButton("View Threads");
-		btnViewThreads.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		
-		btnViewThreads.setBounds(10, 17, 89, 23);
-		contentPane.add(btnViewThreads);
-		
 
 		JLabel lblNewLabel = new JLabel("Online Users");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -177,26 +161,11 @@ public class ChatWindow extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 	/**
 	 * This method will set Text to the main J Text Area
 	 * 
 	 * @param temp
 	 */
-=======
->>>>>>> parent of 4439a90... First Final Version of chat client
-=======
->>>>>>> parent of 4439a90... First Final Version of chat client
-=======
->>>>>>> parent of 4439a90... First Final Version of chat client
-=======
->>>>>>> parent of 4439a90... First Final Version of chat client
-=======
->>>>>>> parent of 4439a90... First Final Version of chat client
 	public static void setText(String temp) {
 		if (wholeText.equals("")) {
 			wholeText = temp;
@@ -206,11 +175,6 @@ public class ChatWindow extends JFrame implements ActionListener {
 		msgArea.setText(wholeText);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 	/**
 	 * 
 	 * @param list
@@ -220,42 +184,4 @@ public class ChatWindow extends JFrame implements ActionListener {
 		clientList = list;
 	}
 
-=======
-=======
->>>>>>> parent of 4439a90... First Final Version of chat client
-=======
->>>>>>> parent of 4439a90... First Final Version of chat client
-=======
->>>>>>> parent of 4439a90... First Final Version of chat client
-=======
->>>>>>> parent of 4439a90... First Final Version of chat client
-	public static String getText() {
-		return mgsOut;
-	}
-	
-	public static void setList(ArrayList<String> list){
-		clientList=list;
-	}
-	
-
-	public boolean isActionPerformed() {
-		return actionPerformed;
-	}
-
-	public void setActionPerformed(boolean bal) {
-		actionPerformed = bal;
-	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of 4439a90... First Final Version of chat client
-=======
->>>>>>> parent of 4439a90... First Final Version of chat client
-=======
->>>>>>> parent of 4439a90... First Final Version of chat client
-=======
->>>>>>> parent of 4439a90... First Final Version of chat client
-=======
->>>>>>> parent of 4439a90... First Final Version of chat client
 }

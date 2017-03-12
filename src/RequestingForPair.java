@@ -1,11 +1,12 @@
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
 public class RequestingForPair {
 
+	
+	
 	String userName;
 	ArrayList<ClientThread> clientThreadList;
 
@@ -25,9 +26,11 @@ public class RequestingForPair {
 	 *             from ObjectOutput stream
 	 * @throws ClassNotFoundException
 	 */
-	public ClientThread matchingPair(ObjectInputStream oisPair) throws NullPointerException {
-		String name = null;
+	public ClientThread matchingPair(Socket requestingPair) throws NullPointerException {
+		String name=null;
+		ObjectInputStream oisPair=null;
 		try {
+			oisPair = new ObjectInputStream(requestingPair.getInputStream());
 			name = (String) oisPair.readObject();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -44,38 +47,6 @@ public class RequestingForPair {
 			}
 		}
 		return clientThread;
-	}
-
-	public void sendingRequestForPair(ClientThread clientThreadToSend, ClientThread clientThreadFromSend) {
-		try {
-			clientThreadToSend.oosRequestPair
-					.writeObject("Recieved pair request from " + clientThreadFromSend.getName());
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public boolean recievingResponse(ClientThread clientThreadToSend) {
-		String response = "";
-		try {
-			response = (String) clientThreadToSend.oisResponsePair.readObject();
-
-		} catch (ClassNotFoundException e) {
-			System.err.println("error at RequestingForPair at line 66");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.err.println("error at RequestingForPair at line 70");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if (response.equals("yes")) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 }
